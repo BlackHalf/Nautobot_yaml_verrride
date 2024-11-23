@@ -21,13 +21,13 @@ sync_devices:
         iterable_type: "str"
   mgmt_interface:
     commands:
-      - command: "show interfaces"
+      - command: "show interfaces status"
         parser: "textfsm"
         jpath: "[?ip_address=='{{ obj }}'].{name: interface, enabled: link_status}"
         post_processor: "{{ (obj | selectattr('enabled', 'eq', 'up') | list | first ).name }}"
   mask_length:
     commands:
-      - command: "show interfaces"
+      - command: "show interfaces status"
         parser: "textfsm"
         jpath: "[?ip_address=='{{ obj }}'].prefix_length"
         post_processor: "{{ obj | unique | first }}"
